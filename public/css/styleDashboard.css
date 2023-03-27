@@ -1,0 +1,97 @@
+/* Estilo do corpo */
+body {
+    font-family: 'Titillium Web', sans-serif;
+  }
+
+  /* Estilo do menu */
+  nav.navbar {
+    background-color: #fff;
+    border-bottom: 1px solid #ccc;
+  }
+
+  .navbar-brand {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+
+  .nav-link {
+    color: #333;
+  }
+
+  /* Estilo do conteúdo */
+  main {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+
+  .container {
+    flex: 1;
+    margin-right: 20px;
+  }
+
+  /* Estilo do rodapé */
+  footer {
+    margin-top: 20px;
+    text-align: center;
+  }
+
+/* Estilo do menu */
+nav.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+  }
+
+
+
+  .navbar-brand {
+    font-size: 1.5rem;
+    font-weight: bold;
+    padding: 15px;
+  }
+
+  .nav-link {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    margin: 0 10px;
+    text-indent: -9999px; /* Esconder o texto */
+    background-color: #333;
+  }
+
+  /* Estilo do conteúdo */
+  main {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    margin-left: 25%;
+  }
+
+  .container {
+    flex: 1;
+    margin-right: 20px;
+  }
+
+  /* Estilo dos botões */
+  .btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+  }
+
+  .btn-primary:hover {
+    background-color: #0069d9;
+    border-color: #0062cc;
+  }
+
+  .btn-danger {
+    background-color: #dc3545;
+    border-color: #dc3545;
+  }
+
+  .btn-danger:hover {
+    background-color: #c82333;
+    border-color: #bd2130;
+  }
