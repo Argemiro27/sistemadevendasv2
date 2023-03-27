@@ -2,7 +2,6 @@
 
 @section('content')
   <div class="container mt-4">
-    <h1 class="mb-4">Sistema de Vendas</h1>
-    <p>Olá {{ $name }}, seja bem vindo!</p>
+    <h1 class="mb-4">Listagem de vendas</h1>
   </div>
 @endsection
