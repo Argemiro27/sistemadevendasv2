@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\CadastraVendaController;
+use App\Http\Controllers\VendaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -57,12 +57,14 @@ Route::middleware(['auth'])->group(function () {
 
 });
 
+
 Route::middleware(['auth'])->group(function () {
-    Route::get('/cadastravenda', [CadastraVendaController::class, 'index'])->name('cadastravenda.index');
-    Route::post('/cadastravenda', [CadastraVendaController::class, 'store'])->name('cadastravenda.store');
-    Route::get('/cadastravenda/create', [CadastraVendaController::class, 'create'])->name('cadastravenda.create');
-    Route::get('/cadastravenda/{venda}', [CadastraVendaController::class, 'show'])->name('cadastravenda.show');
-    Route::get('/cadastravenda/{venda}/edit', [CadastraVendaController::class, 'edit'])->name('cadastravenda.edit');
-    Route::put('/cadastravenda/{venda}', [CadastraVendaController::class, 'update'])->name('cadastravenda.update');
-    Route::delete('/cadastravenda/{venda}', [CadastraVendaController::class, 'destroy'])->name('cadastravenda.destroy');
+    Route::get('/home', function () {
+        return view('dashboard.home');
+    })->name('home');
+
+    Route::get('/cadastrarvendas', [VendaController::class, 'create'])->name('cadastrarvendas');
+    Route::post('/cadastrarvendas', [VendaController::class, 'store'])->name('cadastravendas.store');
+
+    Route::get('/listagemdevendas', [VendaController::class, 'index'])->name('listagemdevendas');
 });

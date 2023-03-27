@@ -14,13 +14,14 @@ return new class extends Migration
     public function up()
     {
         Schema::create('vendas', function (Blueprint $table) {
-            $table->id();
             $table->string('cliente');
-            $table->decimal('valor_total');
-            $table->enum('forma_pagamento', ['à vista', 'parcelado']);
-            $table->integer('quantidade_parcelas')->nullable();
+            $table->text('itens');
+            $table->decimal('total', 10, 2);
+            $table->enum('forma_pagamento', ['a_vista', 'parcelado']);
+            $table->integer('num_parcelas')->nullable();
+            $table->text('parcelas')->nullable();
             $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

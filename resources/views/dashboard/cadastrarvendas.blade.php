@@ -5,7 +5,7 @@
 <script src="{{ asset('js/simulaparcelas.js') }}"></script>
   <div class="container mt-4">
     <h1 class="mb-4">Cadastrar Vendas</h1>
-    <form method="POST" action="{{ route('cadastravenda.store') }}">
+    <form method="POST" action="{{ route('vendas.store') }}">
       @csrf
       <div class="form-group">
         <label for="cliente">Nome do Cliente:</label>
