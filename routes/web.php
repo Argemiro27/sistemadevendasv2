@@ -58,13 +58,14 @@ Route::middleware(['auth'])->group(function () {
 });
 
 
+
+
 Route::middleware(['auth'])->group(function () {
-    Route::get('/home', function () {
-        return view('dashboard.home');
-    })->name('home');
-
-    Route::get('/cadastrarvendas', [VendaController::class, 'create'])->name('cadastrarvendas');
-    Route::post('/cadastrarvendas', [VendaController::class, 'store'])->name('cadastravendas.store');
-
-    Route::get('/listagemdevendas', [VendaController::class, 'index'])->name('listagemdevendas');
+    Route::get('/vendas', [VendaController::class, 'index'])->name('vendas.index');
+    Route::get('/vendas/create', [VendaController::class, 'create'])->name('vendas.create');
+    Route::post('/vendas', [VendaController::class, 'store'])->name('vendas.store');
+    Route::get('/vendas/{id}', [VendaController::class, 'show'])->name('vendas.show');
+    Route::get('/vendas/{id}/edit', [VendaController::class, 'edit'])->name('vendas.edit');
+    Route::put('/vendas/{id}', [VendaController::class, 'update'])->name('vendas.update');
+    Route::delete('/vendas/{id}', [VendaController::class, 'destroy'])->name('vendas.destroy');
 });

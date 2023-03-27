@@ -38,7 +38,7 @@
       <div class="form-group">
         <label for="forma_pagamento">Forma de Pagamento:</label>
         <select class="form-control" id="forma_pagamento" name="forma_pagamento" required>
-          <option value="">Selecione a forma de pagamento</option>
+          <option>Selecione a forma de pagamento</option>
           <option value="a_vista">À vista</option>
           <option value="parcelado">Parcelado</option>
         </select>
