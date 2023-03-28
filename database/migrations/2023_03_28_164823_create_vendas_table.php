@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateVendasTable extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -15,15 +15,12 @@ class CreateVendasTable extends Migration
     {
         Schema::create('vendas', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->string('cliente');
-            $table->jsonb('itens');
-            $table->decimal('total', 10, 2);
-            $table->enum('forma_pagamento', ['a_vista', 'parcelado']);
-            $table->unsignedInteger('num_parcelas')->nullable();
+            $table->foreignId('cliente_id')->constrained('clientes')->onDelete('cascade');
+            $table->foreignId('produto_id')->constrained('produtos')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained();
             $table->timestamps();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
+
     }
 
     /**
@@ -35,4 +32,4 @@ class CreateVendasTable extends Migration
     {
         Schema::dropIfExists('vendas');
     }
-}
+};

@@ -1,69 +1,73 @@
 @extends('dashboard.layout')
 
 @section('content')
-<script src="{{ asset('js/vendas.js') }}"></script>
-<script src="{{ asset('js/simulaparcelas.js') }}"></script>
-  <div class="container mt-4">
+<div class="container mt-4">
     <h1 class="mb-4">Cadastrar Vendas</h1>
-    <form method="POST" action="{{ route('vendas.store') }}">
-      @csrf
-      <div class="form-group">
-        <label for="cliente">Nome do Cliente:</label>
-        <input type="text" class="form-control" id="cliente" name="cliente" required>
-      </div>
-
-      <div class="form-group">
-        <label for="itens">Itens da Venda:</label>
-        <div id="itens-container">
-          <div class="row mb-2">
-            <div class="col">
-              <input type="text" class="form-control item" name="item[]" required>
-            </div>
-            <div class="col">
-              <input type="number" class="form-control valor" name="valor[]" required>
-            </div>
-            <div class="col">
-              <button type="button" class="btn btn-danger remover-item">&times;</button>
-            </div>
-          </div>
-        </div>
-        <button type="button" id="adicionar-item" class="btn btn-primary">Adicionar Item</button>
-
-        <div class="form-group">
-          <label for="total">Total:</label>
-          <input type="text" class="form-control" id="total" name="total" readonly>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label for="forma_pagamento">Forma de Pagamento:</label>
-        <select class="form-control" id="forma_pagamento" name="forma_pagamento" required>
-          <option>Selecione a forma de pagamento</option>
-          <option value="a_vista">À vista</option>
-          <option value="parcelado">Parcelado</option>
+    <form action="{{ route('vendas.store') }}" method="POST">
+    @csrf
+    <div class="form-group">
+        <label for="nome_venda">Nome/ Identificação da venda:</label>
+        <input type="text" class="form-control" id="nome_venda" name="nome_venda">
+    </div>
+    <div class="form-group">
+        <label for="cliente">Cliente</label>
+        <select class="form-control" id="cliente" name="cliente_id">
+            @foreach ($clientes as $cliente)
+                <option value="{{ $cliente->id }}">{{ $cliente->nome }}</option>
+            @endforeach
         </select>
-      </div>
+    </div>
+    <div class="form-group">
+        <label for="produtos">Produtos</label>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Preço</th>
+                    <th>Quantidade</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($produtos as $produto)
+                    <tr>
+                        <td>{{ $produto->nome }}</td>
+                        <td>R$ {{ number_format($produto->preco, 2, ',', '.') }}</td>
+                        <td>
+                            <input type="number" class="form-control produto-quantidade" name="produtos[{{ $produto->id }}]" value="{{ $produto->id }}">
 
-      <div id="parcelado-container" style="display: none;">
-        <div class="form-group">
-          <label for="num_parcelas">Número de Parcelas:</label>
-          <input type="number" class="form-control" id="num_parcelas" name="num_parcelas">
-        </div>
-        <button type="button" id="simular-parcelas" class="btn btn-primary">Simular</button>
-        <table class="table table-bordered" id="parcelas" style="display: none;">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Data da Parcela</th>
-              <th>Valor da Parcela</th>
-              <th>Observações</th>
-            </tr>
-          </thead>
-          <tbody>
-          </tbody>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
         </table>
-      </div>
-      <button type="submit" class="btn btn-primary">Cadastrar</button>
+    </div>
+    <div class="form-group">
+        <label for="total">Total</label>
+        <input type="text" class="form-control" id="total" name="total" readonly>
+        <input type="hidden" name="total" id="total-input">
+    </div>
+    <div class="form-group">
+    <button type="submit" class="btn btn-primary">Cadastrar venda</button>
     </form>
-  </div>
+    @if (session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
+</div>
+
+
+<script>
+    const produtos = document.querySelectorAll('.produto-quantidade');
+
+    produtos.forEach(produto => {
+        produto.addEventListener('change', () => {
+            let total = 0;
+            produtos.forEach(produto => {
+                total += produto.value * parseFloat(produto.parentNode.previousElementSibling.textContent.replace('R$ ', '').replace(',', '.'));
+            });
+            document.querySelector('#total').value = `R$ ${total.toFixed(2).replace('.', ',')}`;
+        });
+    });
+</script>
 @endsection

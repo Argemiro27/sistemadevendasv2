@@ -2,3 +2,20 @@ body{
     height: 100vh;
     background-color: black;
 }
+
+.navbar-nav {
+    flex-direction: column;
+}
+
+.navbar-collapse {
+    width: 100%;
+}
+
+.navbar-nav .nav-item {
+    width: 100%;
+    text-align: center;
+}
+
+.navbar-nav .nav-item .nav-link {
+    padding: .5rem 0;
+}

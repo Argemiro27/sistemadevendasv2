@@ -2,66 +2,90 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cliente;
+use App\Models\Produto;
+use App\Models\Venda;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Venda;
-use App\Models\ItemVenda;
-use App\Models\Parcela;
 
 class VendaController extends Controller
 {
     public function index()
     {
-        // Obtém as vendas do usuário autenticado
-        $vendas = Auth::user()->vendas()->orderBy('created_at', 'desc')->paginate(10);
+        $vendas = Venda::with(['produto', 'user', 'cliente'])
+            ->orderBy('created_at', 'desc')
+            ->get()
+            ->groupBy('nome_venda');
+        $totalGeral = Venda::sum('total');
 
-        return view('dashboard.listagemdevendas', ['vendas' => $vendas]);
+        return view('dashboard.listagemdevendas', compact('vendas'));
     }
+
+
 
     public function create()
     {
-        return view('dashboard.cadastrarvendas');
+        $clientes = Cliente::all();
+        $produtos = Produto::all();
+        return view('dashboard.cadastrarvendas', compact('clientes', 'produtos'));
     }
 
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'cliente' => 'required|string',
-            'item.*' => 'required|string',
-            'valor.*' => 'required|numeric',
-            'forma_pagamento' => 'required|string|in:a_vista,parcelado',
-            'num_parcelas' => 'required_if:forma_pagamento,parcelado|integer|min:1|max:12',
-            'parcela.*.data' => 'required_if:forma_pagamento,parcelado|date',
-            'parcela.*.valor' => 'required_if:forma_pagamento,parcelado|numeric',
-            'parcela.*.observacao' => 'nullable|string'
-        ]);
+        $cliente_id = $request->input('cliente_id');
+        $produtos = $request->input('produtos');
+        $nome_venda = $request->input('nome_venda');
 
-        $venda = new Venda();
-        $venda->cliente = $validatedData['cliente'];
-        $venda->total = array_sum($validatedData['valor']);
-        $venda->forma_pagamento = $validatedData['forma_pagamento'];
-        $venda->user_id = Auth::user()->id;
-        $venda->save();
+        $total = 0;
 
-        for ($i = 0; $i < count($validatedData['item']); $i++) {
-            $item = new ItemVenda();
-            $item->item = $validatedData['item'][$i];
-            $item->valor = $validatedData['valor'][$i];
-            $item->venda_id = $venda->id;
-            $item->save();
-        }
+        foreach ($produtos as $produto_id => $quantidade) {
+            if ($quantidade > 0) {
+                $produto = Produto::find($produto_id);
+                $total += $produto->preco * $quantidade;
 
-        if ($validatedData['forma_pagamento'] === 'parcelado') {
-            foreach ($validatedData['parcela'] as $parcelaData) {
-                $parcela = new Parcela();
-                $parcela->data = $parcelaData['data'];
-                $parcela->valor = $parcelaData['valor'];
-                $parcela->observacao = $parcelaData['observacao'];
-                $parcela->venda_id = $venda->id;
-                $parcela->save();
+                $venda = new Venda;
+                $venda->cliente_id = $cliente_id;
+                $venda->produto_id = $produto_id;
+                $venda->quantidade = $quantidade;
+                $venda->user_id = Auth::id();
+                $venda->nome_venda = $nome_venda; // adicionando o valor de $nome_venda à propriedade nome_venda
+                $venda->save();
             }
         }
 
-        return redirect()->route('listagemdevendas')->with('success', 'Venda cadastrada com sucesso.');
+        // Salva o valor total da venda no banco de dados
+        $venda = Venda::latest()->first();
+        $venda->total = $total;
+        $venda->save();
+
+        return redirect()->route('dashboard.pagamento')->with('venda_id', $venda->id);
     }
+
+
+
+    public function destroy($id)
+    {
+        // Encontra a venda que deseja excluir
+        $venda = Venda::findOrFail($id);
+
+        // Busca todas as vendas com o mesmo nome
+        $vendas = Venda::where('nome_venda', $venda->nome_venda)->get();
+
+        // Exclui todas as vendas encontradas
+        foreach ($vendas as $v) {
+            $v->delete();
+        }
+
+        return redirect()->route('vendas.index')->with('success', 'Venda excluída com sucesso.');
+    }
+
+    public function update(Request $request)
+    {
+        $venda = Venda::findOrFail($request->input('pk'));
+        $venda->{$request->input('name')} = $request->input('value');
+        $venda->save();
+
+        return response()->json(['status' => 'success']);
+    }
+
 }

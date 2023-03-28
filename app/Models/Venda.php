@@ -9,7 +9,17 @@ class Venda extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['cliente', 'itens', 'total', 'forma_pagamento', 'num_parcelas', 'user_id'];
+    protected $fillable = ['cliente_id', 'produto_id', 'quantidade', 'total', 'user_id', 'nome_venda'];
+
+    public function cliente()
+    {
+        return $this->belongsTo(Cliente::class);
+    }
+
+    public function produto()
+    {
+        return $this->belongsTo(Produto::class);
+    }
 
     public function user()
     {

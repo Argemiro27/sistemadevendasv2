@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ClienteController;
+use App\Http\Controllers\ProdutoController;
 use App\Http\Controllers\VendaController;
 
 /*
@@ -41,31 +43,37 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 
 
-// MENU
+// Rotas autenticadas
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/home', function () {
         return view('dashboard.home');
     })->name('home');
-    Route::get('/home', [AuthController::class, 'home']);
-    Route::get('/cadastrarvendas', function () {
-        return view('dashboard.cadastrarvendas');
-    })->name('cadastrarvendas');
-    Route::get('/listagemdevendas', function () {
-        return view('dashboard.listagemdevendas');
-    })->name('listagemdevendas');
 
-});
+    Route::get('/cadastrarclientes', function () {
+        return view('dashboard.cadastrarclientes');
+    })->name('cadastrarclientes');
 
+    Route::post('/clientes', [ClienteController::class, 'store'])->name('clientes.store');
 
+    Route::get('/cadastrarprodutos', function () {
+        return view('dashboard.cadastrarprodutos');
+    })->name('cadastrarprodutos');
 
+    Route::post('/produtos', [ProdutoController::class, 'store'])->name('produtos.store');
 
-Route::middleware(['auth'])->group(function () {
-    Route::get('/vendas', [VendaController::class, 'index'])->name('vendas.index');
-    Route::get('/vendas/create', [VendaController::class, 'create'])->name('vendas.create');
+    Route::get('/listagemdevendas', [VendaController::class, 'index'])->name('vendas.index');
+
+    Route::get('/cadastrarvendas', [VendaController::class, 'create'])->name('vendas.create');
+
     Route::post('/vendas', [VendaController::class, 'store'])->name('vendas.store');
-    Route::get('/vendas/{id}', [VendaController::class, 'show'])->name('vendas.show');
+
     Route::get('/vendas/{id}/edit', [VendaController::class, 'edit'])->name('vendas.edit');
+
     Route::put('/vendas/{id}', [VendaController::class, 'update'])->name('vendas.update');
+
     Route::delete('/vendas/{id}', [VendaController::class, 'destroy'])->name('vendas.destroy');
+
+
 });
+

@@ -1,4 +1,21 @@
-function simulaparcelas() {
+$(document).ready(function() {
+    // Mostra parcelas
+    $('#forma_pagamento').change(function() {
+      if ($(this).val() === 'parcelado') {
+        $('#parcelado-container').show();
+      } else {
+        $('#parcelado-container').hide();
+      }
+    });
+
+    // Cria parcelas
+    $('#num_parcelas').change(function() {
+      simulaparcelas();
+    });
+
+});
+
+  function simulaparcelas() {
     var numParcelas = $('#num_parcelas').val();
     if (numParcelas > 0) {
       var valorTotal = parseFloat($('#total').val());
@@ -29,3 +46,22 @@ function simulaparcelas() {
       $('#parcelas').hide();
     }
   }
+
+  $( function() {
+    $( "#cliente" ).autocomplete({
+      source: function( request, response ) {
+        $.ajax({
+          url: "{{ route('clientes.autocomplete') }}",
+          dataType: "json",
+          data: {
+            term: request.term
+          },
+          success: function( data ) {
+            response( data );
+          }
+        });
+      },
+      minLength: 2
+    });
+  } );
+
