@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Register</title>
+    <link rel="stylesheet" href="css/layoutAuth.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <style>
         .container {
@@ -82,9 +83,9 @@
                                 </button>
                             </div>
                         </div>
-                        <button type="button" class="btn btn-link" onclick="window.location='{{ url('/login') }}'">
-                            <i class="fas fa-arrow-left"></i>
-                        </button>
+                        <div class="text-center mt-2">
+                            <a href="{{ route('login') }}" class="btn btn-link"><img src="img/back.png" style="width: 30px; height: auto; position: relative; right: 150px;"/></a>
+                        </div>
                     </form>
                 </div>
             </div>

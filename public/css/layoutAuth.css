@@ -1,6 +1,12 @@
 body{
     height: 100vh;
-    background-color: black;
+    background-color: black !important;
+    font-family: 'Titillium Web', sans-serif !important;
+}
+
+.card{
+    background-color: #173055 !important;
+    color:#3b5680;
 }
 
 .navbar-nav {

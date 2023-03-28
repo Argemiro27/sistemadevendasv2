@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Login</title>
-    <link rel="stylesheet" href="css/styleAuth.css">
+    <link rel="stylesheet" href="css/layoutAuth.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <style>
         .container {
@@ -77,6 +77,9 @@
                                         {{ __('Forgot Your Password?') }}
                                     </a>
                                 @endif
+                                <div class="text-center mt-2">
+                                    <a href="{{ route('register') }}" class="btn btn-link"><img src="img/register.png" style="width: 40px; height: 35px; position: relative; right: 170px;"/></a>
+                                </div>
                             </div>
                         </div>
                     </form>

@@ -1,0 +1,48 @@
+body{
+    background-color: #334b6e !important;
+    font-family: 'Titillium Web', sans-serif !important;
+}
+
+body,p,input,label,text,table{
+    color: #000 !important;
+}
+
+select, input{
+    background-color: #3b5680 !important;
+    border: darkslategrey !important;
+    color: #000 !important;
+}
+
+header {
+    background-color: black;
+}
+
+.nav-link{
+    color: #3b5474 !important;
+    background-color: #173055;
+    border-radius: 5px;
+    margin-left: 10px
+}
+
+.container{
+    height: 100vh;
+    background-color: #173055 !important;
+    border-radius: 15px;
+    margin-top: 35px;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+td, th {
+    border: 2px solid #3b5680 !important;
+}
+
+thead{
+    background-color: rgb(71, 90, 128);
+}
+
+.navbar-toggler {
+    background-color: #173055 !important; /* mude a cor de fundo conforme necessário */
+}
