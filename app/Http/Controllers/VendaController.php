@@ -48,30 +48,27 @@ class VendaController extends Controller
                 $venda->produto_id = $produto_id;
                 $venda->quantidade = $quantidade;
                 $venda->user_id = Auth::id();
-                $venda->nome_venda = $nome_venda; // adicionando o valor de $nome_venda à propriedade nome_venda
+                $venda->nome_venda = $nome_venda;
                 $venda->save();
             }
         }
 
-        // Salva o valor total da venda no banco de dados
         $venda = Venda::latest()->first();
         $venda->total = $total;
         $venda->save();
 
-        return redirect()->route('dashboard.pagamento')->with('venda_id', $venda->id);
+        return redirect()->route('vendas.pagamento', $venda)->with('venda_id', $venda->id);
     }
 
 
 
     public function destroy($id)
     {
-        // Encontra a venda que deseja excluir
+
         $venda = Venda::findOrFail($id);
 
-        // Busca todas as vendas com o mesmo nome
         $vendas = Venda::where('nome_venda', $venda->nome_venda)->get();
 
-        // Exclui todas as vendas encontradas
         foreach ($vendas as $v) {
             $v->delete();
         }
@@ -86,6 +83,10 @@ class VendaController extends Controller
         $venda->save();
 
         return response()->json(['status' => 'success']);
+    }
+    public function pagamento(Venda $venda)
+    {
+        return view('dashboard.vendas.pagamento', compact('venda'));
     }
 
 }

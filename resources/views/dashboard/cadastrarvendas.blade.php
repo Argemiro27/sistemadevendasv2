@@ -47,7 +47,10 @@
         <input type="hidden" name="total" id="total-input">
     </div>
     <div class="form-group">
-    <button type="submit" class="btn btn-primary">Cadastrar venda</button>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalFormaPagamento">
+            Cadastrar Venda
+    </button>
+    @include('modal_forma_pagamento')
     </form>
     @if (session('success'))
         <div class="alert alert-success">

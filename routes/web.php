@@ -46,6 +46,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 // Rotas autenticadas
 
 Route::middleware(['auth'])->group(function () {
+
     Route::get('/home', function () {
         return view('dashboard.home');
     })->name('home');
@@ -74,6 +75,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::delete('/vendas/{id}', [VendaController::class, 'destroy'])->name('vendas.destroy');
 
+    Route::get('/pagamento/{venda}', [VendaController::class, 'pagamento'])->name('vendas.pagamento');
 
 });
 
