@@ -75,4 +75,6 @@
 </script>
 
 @include('dashboard.modals.forma_pagamento')
+
 @endsection
+
