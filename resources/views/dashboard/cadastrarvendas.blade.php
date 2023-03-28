@@ -50,7 +50,7 @@
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalFormaPagamento">
             Cadastrar Venda
     </button>
-    @include('modal_forma_pagamento')
+
     </form>
     @if (session('success'))
         <div class="alert alert-success">
@@ -73,4 +73,6 @@
         });
     });
 </script>
+
+@include('dashboard.modals.forma_pagamento')
 @endsection
