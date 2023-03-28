@@ -47,10 +47,7 @@
         <input type="hidden" name="total" id="total-input">
     </div>
     <div class="form-group">
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalFormaPagamento">
-            Cadastrar Venda
-    </button>
-
+    <button type="submit" class="btn btn-primary">Cadastrar venda</button>
     </form>
     @if (session('success'))
         <div class="alert alert-success">
@@ -73,8 +70,4 @@
         });
     });
 </script>
-
-@include('dashboard.modals.forma_pagamento')
-
 @endsection
-
