@@ -71,7 +71,6 @@
 <script>
 const produtos = document.querySelectorAll('.produto-quantidade');
 const totalInput = document.querySelector('#total');
-
 produtos.forEach(produto => {
     produto.addEventListener('change', () => {
         let total = 0;
@@ -88,7 +87,6 @@ produtos.forEach(produto => {
 <script>
 const formaPagamento = document.querySelector('#forma_pagamento');
 const parcelasDiv = document.querySelector('#parcelas');
-
 formaPagamento.addEventListener('change', () => {
     if (formaPagamento.value === 'À vista') {
         parcelasDiv.style.display = 'none';
@@ -100,4 +98,3 @@ formaPagamento.addEventListener('change', () => {
 
 
 @endsection
-

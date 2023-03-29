@@ -10,16 +10,6 @@
         <input type="text" class="form-control" id="nome" name="nome" required>
       </div>
 
-      <div class="form-group">
-        <label for="telefone">Telefone</label>
-        <input type="text" class="form-control" id="telefone" name="telefone" required>
-      </div>
-
-      <div class="form-group">
-        <label for="cpf">CPF</label>
-        <input type="text" class="form-control" id="cpf" name="cpf" required>
-      </div>
-
       <button type="submit" class="btn btn-primary">Cadastrar</button>
     </form>
     @if (session('success'))

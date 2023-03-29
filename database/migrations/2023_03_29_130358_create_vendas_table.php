@@ -15,14 +15,14 @@ return new class extends Migration
     {
         Schema::create('vendas', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('cliente_id')->constrained('clientes')->onDelete('cascade');
-            $table->foreignId('produto_id')->constrained('produtos')->onDelete('cascade');
-            $table->foreignId('user_id')->constrained();
-            $table->decimal('total', 10, 2);
+            $table->unsignedBigInteger('cliente_id')->nullable();
+            $table->foreign('cliente_id')->references('id')->on('clientes')->onDelete('cascade');
+            $table->unsignedBigInteger('usuario_id');
+            $table->foreign('usuario_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('forma_pagamento');
+            $table->enum('status', ['pendente', 'pago', 'cancelado'])->default('pendente');
             $table->timestamps();
         });
-
     }
 
     /**

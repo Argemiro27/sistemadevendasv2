@@ -24,10 +24,10 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="/cadastrarclientes">Cadastrar clientes</a>
+                        <a class="nav-link" href="/cadastrarcliente">Cadastrar clientes</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/cadastrarprodutos">Cadastrar produtos</a>
+                        <a class="nav-link" href="/cadastrarproduto">Cadastrar produtos</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/cadastrarvendas">Cadastrar Vendas</a>
