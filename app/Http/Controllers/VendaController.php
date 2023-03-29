@@ -52,28 +52,21 @@ class VendaController extends Controller
                 $venda->nome_venda = $nome_venda;
                 $venda->forma_pagamento = $request->input('forma_pagamento');
                 $venda->total = $request->input('total');
-                $venda->save();
             }
         }
         if ($request->input('forma_pagamento') == 'parcelado') {
-            $numero_parcelas = $request->input('numero_parcelas');
-            $valor_total = $request->input('total');
-            $valor_parcela = $valor_total / $numero_parcelas;
-            $data_vencimento = $request->input('data_vencimento');
-
-            for ($i = 1; $i <= $numero_parcelas; $i++) {
-                $parcela = new Parcela;
-                $parcela->venda_id = $venda->id;
-                $parcela->numero_parcela = $i;
-                $parcela->valor = $valor_parcela;
-                $parcela->data_vencimento = $data_vencimento;
-                $parcela->save();
-
-                // Incrementar a data de vencimento para a próxima parcela
-                $data_vencimento = date('Y-m-d', strtotime("+1 month", strtotime($data_vencimento)));
+            $numParcelas = intval(request('num_parcelas'));
+            $valorTotal = floatval(request('total'));
+            $valorParcela = $valorTotal / $numParcelas;
+            for ($i = 1; $i <= $numParcelas; $i++) {
+                $dataVencimento = date('Y-m-d', strtotime("+{$i} month"));
+                $parcelas = new Parcela();
+                $parcelas->venda_id = $venda->id;
+                $parcelas->numero = $i;
+                $parcelas->valor = $valorParcela;
+                $parcelas->data_vencimento = $dataVencimento;
+                $parcelas->save();
             }
-
-            $venda->total_parcelas = $valor_total;
         }
         $venda = Venda::latest()->first();
         $venda->total = $total;
