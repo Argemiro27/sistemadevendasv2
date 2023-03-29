@@ -43,15 +43,15 @@ public function autocomplete(Request $request)
 }
 public function buscarClientes(Request $request)
 {
-    $query = $request->get('term', ''); // obtém o valor de pesquisa da solicitação
+    $query = $request->get('term', '');
 
-    $clientes = Cliente::where('nome', 'LIKE', '%'. $query .'%')->get(); // busca os clientes com base no valor de pesquisa
+    $clientes = Cliente::where('nome', 'LIKE', '%'. $query .'%')->get();
 
     $resultados = [];
     foreach ($clientes as $cliente) {
         $resultados[] = ['id' => $cliente->id, 'value' => $cliente->nome];
     }
 
-    return response()->json($resultados); // retorna os resultados como um array JSON
+    return response()->json($resultados);
 }
 }

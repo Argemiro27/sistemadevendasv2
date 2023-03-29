@@ -36,7 +36,8 @@ class VendaController extends Controller
         $cliente_id = $request->input('cliente_id');
         $produtos = $request->input('produtos');
         $nome_venda = $request->input('nome_venda');
-
+        $forma_pagamento = $request->input('forma_pagamento');
+        $qtd_parcelas = $request->input('qtd_parcelas');
         $total = 0;
 
         foreach ($produtos as $produto_id => $quantidade) {
@@ -50,27 +51,27 @@ class VendaController extends Controller
                 $venda->quantidade = $quantidade;
                 $venda->user_id = Auth::id();
                 $venda->nome_venda = $nome_venda;
-                $venda->forma_pagamento = $request->input('forma_pagamento');
-                $venda->total = $request->input('total');
+                $venda->forma_pagamento = $forma_pagamento;
+                $venda->qtd_parcelas = $qtd_parcelas;
+                $venda->total = $total;
+                $venda->save();
             }
         }
-        if ($request->input('forma_pagamento') == 'parcelado') {
-            $numParcelas = intval(request('num_parcelas'));
-            $valorTotal = floatval(request('total'));
-            $valorParcela = $valorTotal / $numParcelas;
-            for ($i = 1; $i <= $numParcelas; $i++) {
+
+        if ($forma_pagamento == 'parcelado') {
+            $qtd_parcelas = intval(request('qtd_parcelas'));
+            $valorParcela = $total / $qtd_parcelas;
+            $vendaId = $venda->id;
+            for ($i = 1; $i <= $qtd_parcelas; $i++) {
                 $dataVencimento = date('Y-m-d', strtotime("+{$i} month"));
                 $parcelas = new Parcela();
-                $parcelas->venda_id = $venda->id;
+                $parcelas->venda_id = $vendaId;
                 $parcelas->numero = $i;
                 $parcelas->valor = $valorParcela;
                 $parcelas->data_vencimento = $dataVencimento;
                 $parcelas->save();
             }
         }
-        $venda = Venda::latest()->first();
-        $venda->total = $total;
-        $venda->save();
 
         return redirect()->route('vendas.index')->with('success', 'Venda cadastrada com sucesso!');
     }

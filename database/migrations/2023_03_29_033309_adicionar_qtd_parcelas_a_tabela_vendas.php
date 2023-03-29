@@ -1,9 +1,10 @@
 <?php
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddCamposToVendasTable extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +14,7 @@ class AddCamposToVendasTable extends Migration
     public function up()
     {
         Schema::table('vendas', function (Blueprint $table) {
-            $table->string('forma_pagamento')->nullable();
-            $table->decimal('total', 10, 2)->nullable();
+            $table->integer('qtd_parcelas')->nullable();
         });
     }
 
@@ -26,7 +26,7 @@ class AddCamposToVendasTable extends Migration
     public function down()
     {
         Schema::table('vendas', function (Blueprint $table) {
-            $table->dropColumn(['forma_pagamento', 'total']);
+            //
         });
     }
-}
+};

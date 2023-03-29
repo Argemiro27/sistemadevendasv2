@@ -46,8 +46,8 @@
         <input type="text" class="form-control" id="total" name="total" readonly>
     </div>
     <div class="form-group" id="parcelas" style="display:none">
-        <label for="num_parcelas">Número de Parcelas:</label>
-        <input type="number" class="form-control" id="num_parcelas" name="num_parcelas" value="1" min="1" max="12">
+        <label for="qtd_parcelas">Número de Parcelas:</label>
+        <input type="number" class="form-control" id="qtd_parcelas" name="qtd_parcelas" value="1" min="1" max="12">
     </div>
     <div class="form-group">
         <label for="forma_pagamento">Forma de Pagamento:</label>
