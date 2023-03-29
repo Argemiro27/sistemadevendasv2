@@ -18,6 +18,8 @@ return new class extends Migration
             $table->foreignId('cliente_id')->constrained('clientes')->onDelete('cascade');
             $table->foreignId('produto_id')->constrained('produtos')->onDelete('cascade');
             $table->foreignId('user_id')->constrained();
+            $table->decimal('total', 10, 2);
+            $table->string('forma_pagamento');
             $table->timestamps();
         });
 

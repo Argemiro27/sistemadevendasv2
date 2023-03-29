@@ -75,7 +75,6 @@ Route::middleware(['auth'])->group(function () {
 
     Route::delete('/vendas/{id}', [VendaController::class, 'destroy'])->name('vendas.destroy');
 
-    Route::get('/pagamento/{venda}', [VendaController::class, 'pagamento'])->name('vendas.pagamento');
 
 });
 

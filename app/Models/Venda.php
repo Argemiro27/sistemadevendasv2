@@ -25,4 +25,8 @@ class Venda extends Model
     {
         return $this->belongsTo(User::class);
     }
+    public function parcelas()
+    {
+        return $this->hasMany(Parcela::class);
+    }
 }

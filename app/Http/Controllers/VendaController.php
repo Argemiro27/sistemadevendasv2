@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cliente;
+use App\Models\Parcela;
 use App\Models\Produto;
 use App\Models\Venda;
 use Illuminate\Http\Request;
@@ -49,15 +50,36 @@ class VendaController extends Controller
                 $venda->quantidade = $quantidade;
                 $venda->user_id = Auth::id();
                 $venda->nome_venda = $nome_venda;
+                $venda->forma_pagamento = $request->input('forma_pagamento');
+                $venda->total = $request->input('total');
                 $venda->save();
             }
         }
+        if ($request->input('forma_pagamento') == 'parcelado') {
+            $numero_parcelas = $request->input('numero_parcelas');
+            $valor_total = $request->input('total');
+            $valor_parcela = $valor_total / $numero_parcelas;
+            $data_vencimento = $request->input('data_vencimento');
 
+            for ($i = 1; $i <= $numero_parcelas; $i++) {
+                $parcela = new Parcela;
+                $parcela->venda_id = $venda->id;
+                $parcela->numero_parcela = $i;
+                $parcela->valor = $valor_parcela;
+                $parcela->data_vencimento = $data_vencimento;
+                $parcela->save();
+
+                // Incrementar a data de vencimento para a próxima parcela
+                $data_vencimento = date('Y-m-d', strtotime("+1 month", strtotime($data_vencimento)));
+            }
+
+            $venda->total_parcelas = $valor_total;
+        }
         $venda = Venda::latest()->first();
         $venda->total = $total;
         $venda->save();
 
-        return redirect()->route('vendas.pagamento', $venda)->with('venda_id', $venda->id);
+        return redirect()->route('vendas.index')->with('success', 'Venda cadastrada com sucesso!');
     }
 
 
