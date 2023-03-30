@@ -19,6 +19,7 @@
     },
     "dependencies": {
         "bootstrap": "^5.2.3",
+        "jquery-ui": "^1.13.2",
         "x-editable": "^1.5.1"
     }
 }

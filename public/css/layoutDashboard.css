@@ -5,6 +5,14 @@ body{
 
 body,p,input,label,text,table{
     color: #000 !important;
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.container form{
+    background-color: #b3b3b3 !important;
+    padding: 10px;
+    border-radius: 3px;
 }
 
 select, input{
@@ -47,3 +55,8 @@ thead{
 .navbar-toggler {
     background-color: #173055 !important; /* mude a cor de fundo conforme necessário */
 }
+
+.ui-autocomplete {
+    background-color: #fff;
+    width: 15px;
+  }

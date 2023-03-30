@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProdutosController;
 use App\Http\Controllers\ClientesController;
-use App\Http\Controllers\VendaController;
+use App\Http\Controllers\VendasController;
 
 /*
 |--------------------------------------------------------------------------
@@ -75,10 +75,22 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('/vendas', [VendasController::class, 'store'])->name('vendas.store');
 
+    Route::get('/clientes/buscar', [ClientesController::class, 'buscar'])->name('clientes.buscar');
+    Route::get('/produtos/buscar', [ProdutosController::class, 'buscar'])->name('produtos.buscar');
+
+
     Route::get('/vendas/{id}/edit', [VendasController::class, 'edit'])->name('vendas.edit');
 
     Route::put('/vendas/{id}', [VendasController::class, 'update'])->name('vendas.update');
 
     Route::delete('/vendas/{id}', [VendasController::class, 'destroy'])->name('vendas.destroy');
+
+    //Listagem
+
+    Route::get('/listadevendas', function () {
+        return view('dashboard.listadevendas');
+    })->name('listadevendas');
+
+    Route::get('/listadevendas', [VendasController::class, 'index'])->name('vendas.index');
 });
 

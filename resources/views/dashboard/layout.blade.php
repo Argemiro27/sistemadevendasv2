@@ -9,10 +9,12 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-cqa8U6O14z6EwU+vOG02pW5b5bbmb0p0eSwgC9E5aUmfrssx53mjjm1bkl7JhMVprwt/0W/IN2X9NC+ws75BQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,200;0,300;1,200;1,300&display=swap" rel="stylesheet">
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <script src="{{ asset('js/buscaCliente.js') }}"></script>
+  <script src="{{ asset('js/carrinho.js') }}"></script>
 </head>
 <body>
     <header>
@@ -30,10 +32,10 @@
                         <a class="nav-link" href="/cadastrarproduto">Cadastrar produtos</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/cadastrarvendas">Cadastrar Vendas</a>
+                        <a class="nav-link" href="/cadastrarvenda">Cadastrar Vendas</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/listagemdevendas">Listagem de Vendas</a>
+                        <a class="nav-link" href="/listadevendas">Listagem de Vendas</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav ml-auto">

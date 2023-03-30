@@ -1,100 +1,84 @@
 @extends('dashboard.layout')
 
 @section('content')
+
 <div class="container mt-4">
     <h1 class="mb-4">Cadastrar Vendas</h1>
-    <form action="{{ route('vendas.store') }}" method="POST">
+    <form action="{{ route('vendas.store', ['dados' => ['item1', 'item2', 'item3']]) }}">
     @csrf
-    <div class="form-group">
-        <label for="nome_venda">Nome/ Identificação da venda:</label>
-        <input type="text" class="form-control" id="nome_venda" name="nome_venda">
-    </div>
-    <div class="form-group">
-        <label for="cliente">Cliente</label>
-        <select class="form-control" id="cliente" name="cliente_id">
-            @foreach ($clientes as $cliente)
-                <option value="{{ $cliente->id }}">{{ $cliente->nome }}</option>
+    <div>
+        <label for="cliente_nome">Nome do Cliente:</label>
+        <input type="text" class="form-control" id="cliente_nome" name="cliente_nome">
+        <input type="hidden" class="form-control" id="cliente_id" name="cliente_id">
+
+        <label for="produto">Produto:</label>
+        <select name="produto" id="produto" class="form-control">
+            @php
+                $produtos = App\Models\Produtos::all();
+            @endphp
+            @foreach($produtos as $produto)
+                <option value="{{ $produto->id }}" data-preco="{{ $produto->preco }}">{{ $produto->nome }}</option>
             @endforeach
         </select>
-    </div>
-    <div class="form-group">
-        <label for="produtos">Produtos</label>
-        <table class="table">
+
+        <label for="quantidade">Quantidade:</label>
+        <input type="number" class="form-control"  id="quantidade" name="quantidade" value="1">
+
+        <button type="button" id="adicionar" class="btn btn-primary mt-3">Adicionar</button>
+
+        <table class="table table-bordered mt-4">
             <thead>
                 <tr>
-                    <th>Nome</th>
-                    <th>Preço</th>
+                    <th>Produto</th>
                     <th>Quantidade</th>
+                    <th>Valor Unitário</th>
+                    <th>Valor Total</th>
                 </tr>
             </thead>
-            <tbody>
-                @foreach ($produtos as $produto)
-                    <tr>
-                        <td>{{ $produto->nome }}</td>
-                        <td>R$ {{ number_format($produto->preco, 2, ',', '.') }}</td>
-                        <td>
-                            <input type="number" class="form-control produto-quantidade" name="produtos[{{ $produto->id }}]" value="0">
-
-                        </td>
-                    </tr>
-                @endforeach
+            <tbody id="produtos-carrinho">
             </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="3" class="text-right"><strong>Total</strong></td>
+                    <td><input type="text" class="form-control" id="total" name="total" readonly></td>
+                </tr>
+            </tfoot>
         </table>
-    </div>
-    <div class="form-group">
-        <label for="total">Total</label>
-        <input type="text" class="form-control" id="total" name="total" readonly>
-    </div>
-    <div class="form-group" id="parcelas" style="display:none">
-        <label for="qtd_parcelas">Número de Parcelas:</label>
-        <input type="number" class="form-control" id="qtd_parcelas" name="qtd_parcelas" value="1" min="1" max="12">
-    </div>
-    <div class="form-group">
-        <label for="forma_pagamento">Forma de Pagamento:</label>
-        <select class="form-control" id="forma_pagamento" name="forma_pagamento">
-            <option value="À vista">À vista</option>
-            <option value="Parcelado">Parcelado</option>
-        </select>
-    </div>
 
-    <div class="form-group">
-    <button type="submit" class="btn btn-primary">Cadastrar venda</button>
-    </form>
-    @if (session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
+        <label for="forma_pagamento">Forma de pagamento:</label>
+        <select name="forma_pagamento" id="forma_pagamento">
+            <option value="vista">À vista</option>
+            <option value="parcelado">Parcelado</option>
+        </select>
+        <div id="parcelado-campo" style="display:none;">
+            <label for="parcelado-quantidade">Quantidade de parcelas:</label>
+            <input type="number" name="parcelado-quantidade" id="parcelado-quantidade">
         </div>
-    @endif
+
+        <button id="finalizar-compra" type="submit" class="btn btn-primary">Cadastrar venda</button>
+    </div>
+    </form>
+    <div class="form-group">
+        @if (session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
+    </div>
 </div>
 
-
 <script>
-const produtos = document.querySelectorAll('.produto-quantidade');
-const totalInput = document.querySelector('#total');
-produtos.forEach(produto => {
-    produto.addEventListener('change', () => {
-        let total = 0;
-        produtos.forEach(produto => {
-            total += produto.value * parseFloat(produto.parentNode.previousElementSibling.textContent.replace('R$ ', '').replace(',', '.'));
-        });
-        totalInput.value = total.toFixed(2);
+    const forma_pagamento = document.getElementById("forma_pagamento");
+    const parceladoCampo = document.getElementById("parcelado-campo");
+    forma_pagamento.addEventListener("change", function () {
+      if (this.value === "parcelado") {
+        parceladoCampo.style.display = "block";
+      } else {
+        parceladoCampo.style.display = "none";
+      }
     });
-});
 </script>
-
-
-
-<script>
-const formaPagamento = document.querySelector('#forma_pagamento');
-const parcelasDiv = document.querySelector('#parcelas');
-formaPagamento.addEventListener('change', () => {
-    if (formaPagamento.value === 'À vista') {
-        parcelasDiv.style.display = 'none';
-    } else {
-        parcelasDiv.style.display = 'block';
-    }
-});
-</script>
-
 
 @endsection
+
+

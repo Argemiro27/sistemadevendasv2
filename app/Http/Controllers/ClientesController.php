@@ -49,4 +49,11 @@ class ClientesController extends Controller
         $cliente->delete();
         return redirect()->route('clientes.index');
     }
+    public function buscar(Request $request)
+    {
+        $termo = $request->input('termo');
+        $clientes = Clientes::where('nome', 'LIKE', '%'.$termo.'%')->get();
+
+        return response()->json($clientes);
+    }
 }

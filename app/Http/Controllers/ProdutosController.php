@@ -51,4 +51,13 @@ class ProdutosController extends Controller
         $produto->delete();
         return redirect()->route('produtos.index');
     }
+    public function buscar(Request $request)
+{
+    $termo = $request->get('termo');
+
+    $produtos = Produtos::where('nome', 'like', "%$termo%")->get();
+
+    return response()->json($produtos);
+}
+
 }
