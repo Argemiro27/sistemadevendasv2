@@ -32,11 +32,8 @@ $(function () {
 const searchField = document.querySelector('#search-field');
 const results = document.querySelector('#search-results');
 
-// Adicione um evento de clique nos resultados
 results.addEventListener('click', (event) => {
-  // Verifique se o clique foi em um resultado
   if (event.target.classList.contains('result')) {
-    // Se sim, esconda o campo de busca
     searchField.style.display = 'none';
   }
 });

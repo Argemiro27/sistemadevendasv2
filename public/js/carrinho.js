@@ -1,7 +1,6 @@
 $(document).ready(function() {
     var produtos = [];
 
-    // Adicionar item ao carrinho
     $('#adicionar').click(function() {
       var produto_id = $('#produto').val();
       var produto_nome = $('#produto option:selected').text();
@@ -22,7 +21,6 @@ $(document).ready(function() {
       limparCampos();
     });
 
-    // Renderizar itens do carrinho
     function renderizarCarrinho() {
       var total = 0;
       var tabela = '';
@@ -39,13 +37,11 @@ $(document).ready(function() {
       $('#total').val(total);
     }
 
-    // Limpar campos após adicionar item
     function limparCampos() {
       $('#produto').val('');
       $('#quantidade').val('1');
     }
 
-    // Exibir campo de quantidade de parcelas
     $('#forma_pagamento').change(function() {
       if ($(this).val() == 'parcelado') {
         $('#parcelado-campo').show();

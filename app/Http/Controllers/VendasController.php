@@ -11,7 +11,6 @@ use Carbon\Carbon;
 
 class VendasController extends Controller
 {
-    // Retorna a lista de vendas
     public function index()
     {
         $vendas = Vendas::with(['produto', 'user', 'cliente'])
@@ -23,14 +22,12 @@ class VendasController extends Controller
         return view('dashboard.listadevendas', compact('vendas'));
     }
 
-    // Exibe o formulário para criação de uma nova venda
     public function create()
     {
         $clientes = Clientes::all();
         return view('vendas.create', ['clientes' => $clientes]);
     }
 
-    // Armazena uma nova venda no banco de dados
     public function store(Request $request)
     {
 
@@ -40,10 +37,8 @@ class VendasController extends Controller
         $venda->forma_pagamento = $request->forma_pagamento;
         $venda->save();
 
-        // recuperar o ID da venda recém-criada
         $venda_id = $venda->id;
         $valorTotal = $request->input('total');
-        // criar registros na tabela parcelas, se a forma de pagamento for parcelado
         if ($request->forma_pagamento === 'parcelado') {
             $numParcelas = $request->input('parcelado-quantidade');
             $valorParcela = $valorTotal / $numParcelas;
@@ -61,13 +56,11 @@ class VendasController extends Controller
 
 
 
-    // Exibe o formulário para edição de uma venda existente
     public function edit(Vendas $venda)
     {
         return view('vendas.edit', ['venda' => $venda]);
     }
 
-    // Atualiza uma venda existente no banco de dados
     public function update(Request $request, Vendas $venda)
     {
         $venda->cliente_id = $request->cliente_id;
@@ -77,7 +70,6 @@ class VendasController extends Controller
         return redirect()->route('vendas.index');
     }
 
-    // Remove uma venda do banco de dados
     public function destroy(Vendas $venda)
     {
         $venda->delete();
