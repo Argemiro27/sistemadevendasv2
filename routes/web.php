@@ -78,9 +78,14 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/clientes/buscar', [ClientesController::class, 'buscar'])->name('clientes.buscar');
     Route::get('/produtos/buscar', [ProdutosController::class, 'buscar'])->name('produtos.buscar');
 
-    //Editar, atualizar e remover vendas
-    Route::get('/vendas/{id}/edit', [VendasController::class, 'edit'])->name('vendas.edit');
-    Route::put('/vendas/{id}', [VendasController::class, 'update'])->name('vendas.update');
+    //Editar & atualizar
+    Route::get('/vendas/{id}/editar', 'VendasController@edit')->name('vendas.editar');
+
+
+    Route::get('/vendas/{venda}/edit', [VendasController::class, 'edit'])->name('vendas.edit');
+    Route::put('/vendas/{venda}', [VendasController::class, 'update'])->name('vendas.update');
+
+    //Remover vendas
     Route::delete('/vendas/{id}', [VendasController::class, 'destroy'])->name('vendas.destroy');
 
     //Listagem

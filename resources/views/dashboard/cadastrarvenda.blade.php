@@ -14,7 +14,7 @@
         <table class="table table-bordered mt-4">
             <thead>
                 <tr>
-                    <th>ID produto</th>
+                    <th hidden>ID produto</th>
                     <th>Produto</th>
                     <th>Quantidade</th>
                     <th>Valor Unitário</th>
@@ -27,7 +27,7 @@
                 @endphp
                 @foreach($produtos as $produto)
                     <tr>
-                        <td id="produto_id" name="produto_id">{{ $produto->id }}</td>
+                        <td hidden id="produto_id" name="produto_id">{{ $produto->id }}</td>
                         <td id="produto_nome" name="produto_nome">{{ $produto->nome }}</td>
                         <td id="quantidade" name="quantidade">
                             <input type="number" class="form-control" name="quantidade[{{ $produto->id }}]" value="0">

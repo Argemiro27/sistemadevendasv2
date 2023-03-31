@@ -14,6 +14,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
   <script src="{{ asset('js/buscaCliente.js') }}"></script>
+
 </head>
 <body>
 
@@ -56,5 +57,9 @@
     </main>
     <script src="{{ asset('js/carrinho.js') }}"></script>
     <script src="{{ asset('js/formaPagamento.js') }}"></script>
+    <script src="{{ asset('js/jquery.min.js') }}"></script>
+
+<!-- Bootstrap JS -->
+<script src="{{ asset('js/bootstrap.min.js') }}"></script>
 </body>
 </html>

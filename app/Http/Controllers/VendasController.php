@@ -15,7 +15,8 @@ class VendasController extends Controller
 {
     public function index()
     {
-        $vendas = Vendas::with('parcelas')->get();
+        $vendas = Vendas::with(['usuario', 'parcelas', 'itensvenda'])->get();
+
         return view('dashboard.listadevendas', compact('vendas'));
     }
 
@@ -67,11 +68,14 @@ class VendasController extends Controller
 
 
 
-    public function edit(Vendas $venda)
+    public function edit($id)
     {
-        $vendaComParcelas = Vendas::with('parcelas')->find($venda->id);
-        return view('vendas.edit', ['venda' => $vendaComParcelas]);
+        $venda = Vendas::findOrFail($id);
+        $clientes = Clientes::orderBy('nome')->get();
+
+        return view('dashboard.editarvenda', compact('venda', 'clientes'));
     }
+
 
     public function update(Request $request, Vendas $venda)
     {
@@ -82,10 +86,19 @@ class VendasController extends Controller
         return redirect()->route('vendas.index');
     }
 
-    public function destroy(Vendas $venda)
+    public function destroy($id)
     {
-        $venda->delete();
-        return redirect()->route('vendas.index');
+        $venda = Vendas::findOrFail($id);
 
+        $venda->delete($venda);
+
+        return redirect()->back()->with('success', 'Venda excluída com sucesso!');
+    }
+    public function editarvenda($id)
+    {
+        $venda = Vendas::findOrFail($id);
+        $clientes = Clientes::orderBy('nome')->get();
+
+        return view('dashboard.editarvenda', compact('venda', 'clientes'));
     }
 }

@@ -18,16 +18,16 @@ class Vendas extends Model
 
     public function usuario()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'usuario_id'); // Relação belongsTo: Ele vai procurar o usuário pelo usuario_id que está na tabela vendas.
     }
 
     public function itensVenda()
     {
-        return $this->hasMany(ItensVenda::class);
+        return $this->hasMany(ItensVenda::class, 'venda_id');
     }
 
     public function parcelas()
     {
-        return $this->hasMany(Parcelas::class);
+        return $this->hasMany(Parcelas::class, 'venda_id'); // Relação hasMany: Está na tabela vendas, mas tem relação. Então toda parcela faz parte de uma venda. Mas nem toda venda é parcelada.
     }
 }
