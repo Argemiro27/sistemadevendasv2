@@ -72,18 +72,15 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/cadastrarvenda', function () {
         return view('dashboard.cadastrarvenda');
     })->name('cadastrarvenda');
-
     Route::match(['get', 'post'], '/vendas', [VendasController::class, 'store'])->name('vendas.store');
 
-
+    //Buscar produtos e clientes
     Route::get('/clientes/buscar', [ClientesController::class, 'buscar'])->name('clientes.buscar');
     Route::get('/produtos/buscar', [ProdutosController::class, 'buscar'])->name('produtos.buscar');
 
-
+    //Editar, atualizar e remover vendas
     Route::get('/vendas/{id}/edit', [VendasController::class, 'edit'])->name('vendas.edit');
-
     Route::put('/vendas/{id}', [VendasController::class, 'update'])->name('vendas.update');
-
     Route::delete('/vendas/{id}', [VendasController::class, 'destroy'])->name('vendas.destroy');
 
     //Listagem
@@ -93,5 +90,6 @@ Route::middleware(['auth'])->group(function () {
     })->name('listadevendas');
 
     Route::get('/listadevendas', [VendasController::class, 'index'])->name('vendas.index');
+
 });
 

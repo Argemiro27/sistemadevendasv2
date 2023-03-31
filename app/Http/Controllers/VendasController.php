@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Clientes;
+use App\Models\ItensVenda;
 use App\Models\Parcelas;
+use App\Models\Produtos;
 use App\Models\Vendas;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -13,14 +15,10 @@ class VendasController extends Controller
 {
     public function index()
     {
-        $vendas = Vendas::with(['produto', 'user', 'cliente'])
-        ->orderBy('created_at', 'desc')
-        ->get()
-        ->groupBy('nome_venda');
-        $totalGeral = Vendas::sum('total');
-
+        $vendas = Vendas::with('parcelas')->get();
         return view('dashboard.listadevendas', compact('vendas'));
     }
+
 
     public function create()
     {
@@ -39,8 +37,8 @@ class VendasController extends Controller
 
         $venda_id = $venda->id;
         $valorTotal = $request->input('total');
-        if ($request->forma_pagamento === 'parcelado') {
-            $numParcelas = $request->input('parcelado-quantidade');
+        if ($request->forma_pagamento === 'Parcelado') {
+            $numParcelas = $request->input('nparcelas');
             $valorParcela = $valorTotal / $numParcelas;
             for ($i = 1; $i <= $numParcelas; $i++) {
                 $parcelas = new Parcelas;
@@ -49,6 +47,19 @@ class VendasController extends Controller
                 $parcelas->valor = $valorParcela;
                 $parcelas->numParcelas = $numParcelas;
                 $parcelas->save();
+            }
+        }
+        $produtos = Produtos::all();
+        foreach ($produtos as $produto) {
+            $quantidade = $request->input('quantidade.' . $produto->id);
+
+            if ($quantidade > 0) {
+                $itensvenda = new ItensVenda;
+                $itensvenda->produto_id = $produto->id;
+                $itensvenda->venda_id = $venda->id;
+                $itensvenda->quantidade = $quantidade;
+                $itensvenda->valortotal = $quantidade * $produto->preco;
+                $itensvenda->save();
             }
         }
         return redirect()->back()->with('success', 'Venda cadastrada com sucesso!');

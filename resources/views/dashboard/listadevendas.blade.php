@@ -30,19 +30,12 @@
                         <td>{{ $venda->id }}</td>
                         <td>{{ $venda->created_at }}</td>
                         <td>{{ $venda->usuario->nome }}</td>
-                        <td>{{ $venda->cliente->nome }}</td>
+                        <td>{{ optional($venda->cliente)->nome }}</td>
+
                         <td>{{ $venda->forma_pagamento }}</td>
                         <td>{{ $venda->status }}</td>
                         <td>{{ $venda->numParcelas }}</td>
                         <td>{{ $venda->valor }}</td>
-                        <td><a href="{{ route('venda.edit', $venda->id) }}">Editar</a></td>
-                        <td>
-                            <form action="{{ route('venda.destroy', $venda->id) }}" method="POST">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-link">Remover</button>
-                            </form>
-                        </td>
                     </tr>
                     @php
                         $valor_total_geral += $venda->valor;
@@ -50,6 +43,5 @@
                 @endforeach
             </tbody>
         </table>
-        <p>Valor total geral: R$ {{ number_format($valor_total_geral, 2, ',', '.') }}</p>
     </div>
 @endsection

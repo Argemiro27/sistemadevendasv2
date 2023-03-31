@@ -1,52 +1,35 @@
-$(document).ready(function() {
-    var produtos = [];
+// pega a tabela de produtos
+const tabelaProdutos = document.querySelector("tbody");
 
-    $('#adicionar').click(function() {
-      var produto_id = $('#produto').val();
-      var produto_nome = $('#produto option:selected').text();
-      var produto_quantidade = $('#quantidade').val();
-      var produto_preco = $('#produto option:selected').data('preco');
-      var produto_total = produto_quantidade * produto_preco;
+// pega o campo de total
+const campoTotal = document.getElementById("total");
 
-      var item = {
-        id: produto_id,
-        nome: produto_nome,
-        quantidade: produto_quantidade,
-        preco: produto_preco,
-        total: produto_total
-      };
+// cria um objeto para armazenar o valor total de cada produto
+const valoresTotais = {};
 
-      produtos.push(item);
-      renderizarCarrinho();
-      limparCampos();
+// percorre cada linha da tabela de produtos
+tabelaProdutos.querySelectorAll("tr").forEach(function (linha) {
+    // pega o id e o valor unitário do produto
+    const id = linha.querySelector("td:first-child").textContent;
+    const valorUnitario = linha.querySelector("td:nth-child(4)").textContent;
+
+    // pega o campo de quantidade do produto
+    const campoQuantidade = linha.querySelector("input");
+
+    // adiciona um listener para o campo de quantidade
+    campoQuantidade.addEventListener("input", function () {
+        // calcula o valor total do produto e armazena no objeto de valores totais
+        const quantidade = this.value;
+        const valorTotal = quantidade * valorUnitario;
+        valoresTotais[id] = valorTotal;
+
+        // calcula o valor total da compra
+        let valorTotalCompra = 0;
+        for (const idProduto in valoresTotais) {
+            valorTotalCompra += valoresTotais[idProduto];
+        }
+
+        // atualiza o campo de total
+        campoTotal.value = valorTotalCompra.toFixed(2);
     });
-
-    function renderizarCarrinho() {
-      var total = 0;
-      var tabela = '';
-      for (var i = 0; i < produtos.length; i++) {
-        tabela += '<tr>';
-        tabela += '<td>' + produtos[i].nome + '</td>';
-        tabela += '<td>' + produtos[i].quantidade + '</td>';
-        tabela += '<td>' + produtos[i].preco + '</td>';
-        tabela += '<td>' + produtos[i].total + '</td>';
-        tabela += '</tr>';
-        total += produtos[i].total;
-      }
-      $('#produtos-carrinho').html(tabela);
-      $('#total').val(total);
-    }
-
-    function limparCampos() {
-      $('#produto').val('');
-      $('#quantidade').val('1');
-    }
-
-    $('#forma_pagamento').change(function() {
-      if ($(this).val() == 'parcelado') {
-        $('#parcelado-campo').show();
-      } else {
-        $('#parcelado-campo').hide();
-      }
-    });
-  });
+});

@@ -4,38 +4,39 @@
 
 <div class="container mt-4">
     <h1 class="mb-4">Cadastrar Vendas</h1>
-    <form action="{{ route('vendas.store', ['dados' => ['item1', 'item2', 'item3']]) }}">
+    <form method="POST" action="{{ route('vendas.store') }}">
     @csrf
     <div>
         <label for="cliente_nome">Nome do Cliente:</label>
         <input type="text" class="form-control" id="cliente_nome" name="cliente_nome">
         <input type="hidden" class="form-control" id="cliente_id" name="cliente_id">
 
-        <label for="produto">Produto:</label>
-        <select name="produto" id="produto" class="form-control">
-            @php
-                $produtos = App\Models\Produtos::all();
-            @endphp
-            @foreach($produtos as $produto)
-                <option value="{{ $produto->id }}" data-preco="{{ $produto->preco }}">{{ $produto->nome }}</option>
-            @endforeach
-        </select>
-
-        <label for="quantidade">Quantidade:</label>
-        <input type="number" class="form-control"  id="quantidade" name="quantidade" value="1">
-
-        <button type="button" id="adicionar" class="btn btn-primary mt-3">Adicionar</button>
-
         <table class="table table-bordered mt-4">
             <thead>
                 <tr>
+                    <th>ID produto</th>
                     <th>Produto</th>
                     <th>Quantidade</th>
                     <th>Valor Unitário</th>
                     <th>Valor Total</th>
                 </tr>
             </thead>
-            <tbody id="produtos-carrinho">
+            <tbody>
+                @php
+                    $produtos = App\Models\Produtos::all();
+                @endphp
+                @foreach($produtos as $produto)
+                    <tr>
+                        <td id="produto_id" name="produto_id">{{ $produto->id }}</td>
+                        <td id="produto_nome" name="produto_nome">{{ $produto->nome }}</td>
+                        <td id="quantidade" name="quantidade">
+                            <input type="number" class="form-control" name="quantidade[{{ $produto->id }}]" value="0">
+                            <input type="hidden" name="produto_id[{{ $produto->id }}]" value="{{ $produto->id }}">
+                        </td>
+                        <td id="valorunitario" name="valorunitario">{{ $produto->preco }}</td>
+                        <td id="valortotal" name="valortotal">{{ $produto->valortotal }}</td>
+                    </tr>
+                @endforeach
             </tbody>
             <tfoot>
                 <tr>
@@ -47,12 +48,12 @@
 
         <label for="forma_pagamento">Forma de pagamento:</label>
         <select name="forma_pagamento" id="forma_pagamento">
-            <option value="vista">À vista</option>
-            <option value="parcelado">Parcelado</option>
+            <option value="À vista">À vista</option>
+            <option value="Parcelado">Parcelado</option>
         </select>
         <div id="parcelado-campo" style="display:none;">
             <label for="parcelado-quantidade">Quantidade de parcelas:</label>
-            <input type="number" name="parcelado-quantidade" id="parcelado-quantidade">
+            <input type="number" name="nparcelas" id="nparcelas">
         </div>
 
         <button id="finalizar-compra" type="submit" class="btn btn-primary">Cadastrar venda</button>
@@ -67,17 +68,6 @@
     </div>
 </div>
 
-<script>
-    const forma_pagamento = document.getElementById("forma_pagamento");
-    const parceladoCampo = document.getElementById("parcelado-campo");
-    forma_pagamento.addEventListener("change", function () {
-      if (this.value === "parcelado") {
-        parceladoCampo.style.display = "block";
-      } else {
-        parceladoCampo.style.display = "none";
-      }
-    });
-</script>
 
 @endsection
 
