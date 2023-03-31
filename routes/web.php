@@ -73,7 +73,8 @@ Route::middleware(['auth'])->group(function () {
         return view('dashboard.cadastrarvenda');
     })->name('cadastrarvenda');
 
-    Route::post('/vendas', [VendasController::class, 'store'])->name('vendas.store');
+    Route::match(['get', 'post'], '/vendas', [VendasController::class, 'store'])->name('vendas.store');
+
 
     Route::get('/clientes/buscar', [ClientesController::class, 'buscar'])->name('clientes.buscar');
     Route::get('/produtos/buscar', [ProdutosController::class, 'buscar'])->name('produtos.buscar');

@@ -43,12 +43,12 @@ class VendasController extends Controller
             $numParcelas = $request->input('parcelado-quantidade');
             $valorParcela = $valorTotal / $numParcelas;
             for ($i = 1; $i <= $numParcelas; $i++) {
-                $parcela = new Parcelas;
-                $parcela->venda_id = $venda_id;
-                $parcela->datavencimento = Carbon::now()->addMonths($i)->endOfMonth()->toDateString();
-                $parcela->valor = $valorParcela;
-                $parcela->numParcelas = $numParcelas;
-                $parcela->save();
+                $parcelas = new Parcelas;
+                $parcelas->venda_id = $venda_id;
+                $parcelas->datavencimento = Carbon::now()->addMonths($i)->endOfMonth()->toDateString();
+                $parcelas->valor = $valorParcela;
+                $parcelas->numParcelas = $numParcelas;
+                $parcelas->save();
             }
         }
         return redirect()->back()->with('success', 'Venda cadastrada com sucesso!');
@@ -58,7 +58,8 @@ class VendasController extends Controller
 
     public function edit(Vendas $venda)
     {
-        return view('vendas.edit', ['venda' => $venda]);
+        $vendaComParcelas = Vendas::with('parcelas')->find($venda->id);
+        return view('vendas.edit', ['venda' => $vendaComParcelas]);
     }
 
     public function update(Request $request, Vendas $venda)
