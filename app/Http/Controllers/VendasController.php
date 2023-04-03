@@ -69,7 +69,7 @@ class VendasController extends Controller
 
     public function edit($id)
     {
-        $venda = Vendas::findOrFail($id);
+        $venda = Vendas::find($id);
         $produtos = Produtos::all();
         $clientes = Clientes::orderBy('nome')->get();
 

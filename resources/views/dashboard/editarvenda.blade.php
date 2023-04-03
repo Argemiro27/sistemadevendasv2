@@ -6,7 +6,6 @@
     <h1 class="mb-4">Editar venda</h1>
     <form method="POST" action="{{ route('vendas.update', $venda->id) }}">
     @csrf
-    @method('PUT')
     <div>
         <label for="cliente_nome">Nome do Cliente:</label>
         <input type="text" class="form-control" id="cliente_nome" name="cliente_nome">
@@ -71,5 +70,7 @@
 
 
 @endsection
+
+
 
 

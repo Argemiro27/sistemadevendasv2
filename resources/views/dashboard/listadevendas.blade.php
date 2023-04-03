@@ -33,7 +33,8 @@
 
                         <td>{{ $venda->forma_pagamento }}</td>
                         <td>{{ $venda->status }}</td>
-                        <td>{{ $venda->valortotal }}</td>
+                        <td>R$ {{ number_format($venda->itensVenda->sum('valortotal'), 2, ',', '.') }}</td>
+
                         <td>
                             @if($venda->forma_pagamento == 'Parcelado')
                                 <?php $parcelas = $venda->parcelas; ?>
@@ -49,10 +50,10 @@
                         </td>
 
                         <td>
-                            <form action="{{ route('vendas.destroy', $venda->id) }}" method="POST" onsubmit="return confirm('Tem certeza que deseja excluir esta venda?')">
+                            <a href="{{ route('vendas.destroy', $venda->id) }}" class="btn btn-danger" onclick="event.preventDefault(); if(confirm('Tem certeza que deseja excluir esta venda?')){ document.getElementById('form-delete-{{ $venda->id }}').submit(); }">Excluir</a>
+                            <form id="form-delete-{{ $venda->id }}" action="{{ route('vendas.destroy', $venda->id) }}" method="POST" style="display: none;">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-danger">Excluir</button>
                             </form>
                         </td>
                     </tr>
@@ -60,6 +61,13 @@
                 @endforeach
             </tbody>
         </table>
+        <div class="form-group">
+        @if (session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
+    </div>
     </div>
 </div>
 

@@ -79,9 +79,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/produtos/buscar', [ProdutosController::class, 'buscar'])->name('produtos.buscar');
 
     //Editar & atualizar
+    Route::get('/editarvenda', function () {
+        return view('dashboard.editarvenda');
+    })->name('editarvenda');
+
     Route::get('/vendas/{id}/editar', [VendasController::class, 'edit'])->name('vendas.editar');
-
-
     Route::get('/vendas/{venda}/edit', [VendasController::class, 'edit'])->name('vendas.edit');
     Route::put('/vendas/{venda}', [VendasController::class, 'update'])->name('vendas.update');
 
@@ -95,6 +97,7 @@ Route::middleware(['auth'])->group(function () {
     })->name('listadevendas');
 
     Route::get('/listadevendas', [VendasController::class, 'index'])->name('vendas.index');
+
 
 });
 
