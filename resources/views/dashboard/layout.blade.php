@@ -36,7 +36,7 @@
                     <li class="nav-item">
                         <form action="{{ route('logout') }}" method="POST">
                             @csrf
-                            <button type="submit" style="background-color: #495570; border: none"><img src="img/logout.png" style=" width: 30px; height: auto"/></button>
+                            <button type="submit" style="background-color: transparent; border: none"><img src="img/logout.png" style=" width: 30px; height: auto"/></button>
                         </form>
                     </li>
                 </ul>
