@@ -2,6 +2,7 @@
 
 @section('content')
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-cqa8U6O14z6EwU+vOG02pW5b5bbmb0p0eSwgC9E5aUmfrssx53mjjm1bkl7JhMVprwt/0W/IN2X9NC+ws75BQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <div class="container mt-4">
         <h1 class="mb-4">Listagem de vendas</h1>
 
@@ -39,7 +40,7 @@
                                 <?php $valorTotalParcelado = $parcelas->sum('valor'); ?>
                                 {{ count($parcelas) }}x de R$ {{ number_format($valorTotalParcelado / count($parcelas), 2, ',', '.') }}<br>
                             @else
-                                R$ {{ number_format($venda->valorTotal, 2, ',', '.') }}
+                                R$ {{ number_format($venda->itensVenda->sum('valortotal'), 2, ',', '.') }}
                             @endif
                         </td>
 
@@ -51,7 +52,7 @@
                             <form action="{{ route('vendas.destroy', $venda->id) }}" method="POST" onsubmit="return confirm('Tem certeza que deseja excluir esta venda?')">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-link text-danger p-0">Remover</button>
+                                <button type="submit" class="btn btn-danger">Excluir</button>
                             </form>
                         </td>
                     </tr>

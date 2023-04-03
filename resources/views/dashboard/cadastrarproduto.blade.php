@@ -15,7 +15,7 @@
         <input type="text" class="form-control" id="preco" name="preco" required>
       </div>
 
-      <button type="submit" class="btn btn-primary">Cadastrar</button>
+      <button type="submit" class="btn btn-primary submit">Cadastrar</button>
     </form>
     @if (session('success'))
         <div class="alert alert-success">

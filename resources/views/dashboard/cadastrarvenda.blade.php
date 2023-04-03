@@ -46,7 +46,7 @@
             </tfoot>
         </table>
 
-        <label for="forma_pagamento">Forma de pagamento:</label>
+        <label for="forma_pagamento">Forma de pagamento:</label><br>
         <select name="forma_pagamento" id="forma_pagamento">
             <option value="À vista">À vista</option>
             <option value="Parcelado">Parcelado</option>
@@ -55,8 +55,8 @@
             <label for="parcelado-quantidade">Quantidade de parcelas:</label>
             <input type="number" name="nparcelas" id="nparcelas">
         </div>
-
-        <button id="finalizar-compra" type="submit" class="btn btn-primary">Cadastrar venda</button>
+        <br>
+        <button id="finalizar-compra" type="submit" class="btn btn-primary submit">Cadastrar venda</button>
     </div>
     </form>
     <div class="form-group">

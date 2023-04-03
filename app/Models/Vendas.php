@@ -28,6 +28,7 @@ class Vendas extends Model
 
     public function parcelas()
     {
-        return $this->hasMany(Parcelas::class, 'venda_id'); // Relação hasMany: Está na tabela vendas, mas tem relação. Então toda parcela faz parte de uma venda. Mas nem toda venda é parcelada.
+        return $this->hasMany(Parcelas::class, 'venda_id')
+        ->select(['id', 'venda_id', 'valor', 'datavencimento', 'numParcelas']);  // Relação hasMany: Está na tabela vendas, mas tem relação. Então toda parcela faz parte de uma venda. Mas nem toda venda é parcelada.
     }
 }

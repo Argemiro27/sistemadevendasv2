@@ -79,7 +79,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/produtos/buscar', [ProdutosController::class, 'buscar'])->name('produtos.buscar');
 
     //Editar & atualizar
-    Route::get('/vendas/{id}/editar', 'VendasController@edit')->name('vendas.editar');
+    Route::get('/vendas/{id}/editar', [VendasController::class, 'edit'])->name('vendas.editar');
 
 
     Route::get('/vendas/{venda}/edit', [VendasController::class, 'edit'])->name('vendas.edit');

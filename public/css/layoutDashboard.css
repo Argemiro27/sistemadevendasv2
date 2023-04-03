@@ -1,62 +1,108 @@
+
 body{
-    background-color: #334b6e !important;
+    background-color: #0d1116 !important;
     font-family: 'Titillium Web', sans-serif !important;
+
 }
 
 body,p,input,label,text,table{
-    color: #000 !important;
+    color: #90949f !important;
     font-size: 17px;
     font-weight: bold;
 }
 
+label{
+    text-shadow: 2px 2px 0  #242424;
+}
+
 .container form{
-    background-color: #b3b3b3 !important;
     padding: 10px;
     border-radius: 3px;
 }
 
 select, input{
-    background-color: #3b5680 !important;
+    background-color:  #1f262e !important;
     border: darkslategrey !important;
     color: #000 !important;
 }
 
-header {
-    background-color: black;
-}
 
 .nav-link{
-    color: #3b5474 !important;
-    background-color: #173055;
+    color: #73767e !important;
+    font-weight: bold;
     border-radius: 5px;
-    margin-left: 10px
+    margin-left: 10px;
+    transition: all 0.3s ease-in-out;
+
 }
 
+.nav-link:hover {
+    background-color: #21262c;
+    color: #dadbe0 !important;
+    transform: translateX(10px);
+    transition: all 1.5s ease;
+  }
+
+
 .container{
-    min-height: 100vh;
-    background-color: #173055 !important;
+    min-height: 90vh;
+    background-color: #161c23 !important;
     border-radius: 15px;
     margin-top: 35px;
     height: cover;
+    padding-bottom: 20px;
+    padding: 15px;
+    margin-bottom: 50px;
 }
+
+.container .mt-4{
+    border: none;
+    box-shadow: none;
+}
+
 
 table {
     border-collapse: collapse;
 }
 
 td, th {
-    border: 2px solid #3b5680 !important;
+    border: 2px solid #1c232b !important;
 }
 
 thead{
-    background-color: rgb(71, 90, 128);
+    background-color: #1c232b;
+    color: #90949f;
+    border: none;
 }
 
-.navbar-toggler {
-    background-color: #173055 !important; /* mude a cor de fundo conforme necessário */
+.navbar{
+    background-color: #161c23 !important;
 }
+
 
 .ui-autocomplete {
-    background-color: #fff;
+    background-color: #333333;
     width: 15px;
   }
+
+.btn.btn-primary.submit{
+    background-color: #0ca581 !important;
+    border: none;
+    color: #afeddd !important;
+    font-weight: bold !important;
+    position: absolute;
+    right: 250px;
+}
+
+select{
+    padding: 5px;
+    border-radius: 5px;
+    border: none !important;
+    margin-bottom: 5px !important;
+}
+
+input{
+    color:#90949f !important;
+    padding: 5px;
+    border-radius: 5px;
+}
