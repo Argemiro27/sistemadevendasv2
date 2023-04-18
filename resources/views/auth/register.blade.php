@@ -12,6 +12,7 @@
             max-width: 400px;
         }
     </style>
+    <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,200;0,300;1,200;1,300&display=swap" rel="stylesheet">
 </head>
 <body>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
@@ -78,7 +79,7 @@
 
                         <div class="form-group row mb-0">
                             <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" class="btn btn-primary submit">
                                     {{ __('Registrar-se') }}
                                 </button>
                             </div>
